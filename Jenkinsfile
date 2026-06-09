@@ -33,7 +33,7 @@ pipeline {
         }
         stage("Deploy to Dev") {
             when {
-                expression { params.Environment == 'dev' }
+                expression { params.ENVIRONMENT == 'dev' }
             }
             steps {
                 echo "Deploying to ${params.ENVIRONMENT}"
@@ -41,7 +41,7 @@ pipeline {
         }
         stage("Deploy to test") {
             when {
-                expression { params.Environment == 'test' }
+                expression { params.ENVIRONMENT == 'test' }
             }
             steps {
       withCredentials([
@@ -59,7 +59,7 @@ pipeline {
         }
         stage("Deploy to Prod") {
             when {
-                expression { params.Environment == 'prod' }
+                expression { params.ENVIRONMENT == 'prod' }
             }
             steps {  
                    
