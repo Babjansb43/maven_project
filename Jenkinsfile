@@ -3,7 +3,7 @@ pipeline {
     
     parameters {
         choice(choices: ['dev', 'test', 'prod'], description: 'Select the environment to deploy', name: 'ENVIRONMENT')
-      }
+    }
 
     environment {
         PROD_CRED   = credentials('prod-credentials')
@@ -69,6 +69,7 @@ pipeline {
                 echo "Application Name: ${APP_NAME}"
                 echo "Deploy path: ${DEPLOY_PATH}"
             }
+        }
     }
       post {
         always {
