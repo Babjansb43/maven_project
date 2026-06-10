@@ -38,6 +38,12 @@ pipeline {
                archiveArtifacts artifacts: 'target/*.war', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
             }
         }
+        stage('Environment Test') {
+            steps {
+                echo "Application Name: ${APP_NAME}"
+                echo "Deploy path: ${DEPLOY_PATH}"
+            }
+        }
         stage("Deploy to Dev") {
             when {
                 expression { params.ENVIRONMENT == 'dev' }
@@ -62,12 +68,6 @@ pipeline {
             steps {
                 echo "Deploying with user ${PROD_CRED}"
                 echo "Deploying to ${params.ENVIRONMENT}"
-            }
-        }
-        stage('Environment Test') {
-            steps {
-                echo "Application Name: ${APP_NAME}"
-                echo "Deploy path: ${DEPLOY_PATH}"
             }
         }
     }
