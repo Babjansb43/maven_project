@@ -31,7 +31,7 @@ pipeline {
                     },
                      b: {
                        echo "Doing static code analysis"
-                    }
+                    },
                     c: {
                        echo "Doing security scan"
                     }
