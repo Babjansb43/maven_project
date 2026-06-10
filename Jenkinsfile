@@ -4,6 +4,13 @@ pipeline {
     parameters {
         choice(choices: ['dev', 'test', 'prod'], description: 'Select the environment to deploy', name: 'ENVIRONMENT')
       }
+
+    environment {
+        PROD_CRED   = credentials('prod-credentials')
+        TEST_CRED   = credentials('test-credentials')
+        APP_NAME    = spark-java
+        DEPLOY_PATH = /opt/deployment
+    }
               
     tools {
         maven 'Maven' 
@@ -42,18 +49,9 @@ pipeline {
         stage("Deploy to test") {
             when {
                 expression { params.ENVIRONMENT == 'test' }
-            }
+            } 
             steps {
-      withCredentials([
-        usernamePassword(
-        credentialsId: 'test-credentials', 
-        passwordVariable: 'DEPLOY_PASSWORD', 
-        usernameVariable: 'DEPLOY_USER'
-       )
-     ])  
-        {
-                echo "Deploying with user ${DEPLOY_USER}"
-     }
+                echo "Deploying with user ${TEST_CRED}"
                 echo "Deploying to ${params.ENVIRONMENT}"
             }
         }
@@ -61,22 +59,17 @@ pipeline {
             when {
                 expression { params.ENVIRONMENT == 'prod' }
             }
-            steps {  
-                   
-      withCredentials([
-        usernamePassword(
-        credentialsId: 'prod-credentials', 
-        passwordVariable: 'DEPLOY_PASSWORD', 
-        usernameVariable: 'DEPLOY_USER'
-       )
-     ])
-        {
-                echo "Deploying with user ${DEPLOY_USER}"
-    }
+            steps {
+                echo "Deploying with user ${PROD_CRED}"
                 echo "Deploying to ${params.ENVIRONMENT}"
             }
         }
-      }
+        stage('Environment Test') {
+            steps {
+                echo "Application Name: ${APP_NAME}"
+                echo "Deploy path: ${DEPLOY_PATH}"
+            }
+    }
       post {
         always {
             cleanWs()
