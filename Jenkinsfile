@@ -8,8 +8,8 @@ pipeline {
     environment {
         PROD_CRED   = credentials('prod-credentials')
         TEST_CRED   = credentials('test-credentials')
-        APP_NAME    = spark-java
-        DEPLOY_PATH = /opt/deployment
+        APP_NAME    = "spark-java"
+        DEPLOY_PATH = "/opt/deployment"
     }
               
     tools {
