@@ -23,6 +23,21 @@ pipeline {
                     url: 'https://github.com/Babjansb43/maven_project.git'
             }
         }
+        stage('Parallel stages') {
+            steps {
+                Parallel(
+                     a: {
+                       echo "Doing unit tests"
+                    },
+                     b: {
+                       echo "Doing static code analysis"
+                    }
+                    c: {
+                       echo "Doing security scan"
+                    }
+                )
+            }
+        }
         stage('Build') {
             steps {
                sh 'mvn clean package'
