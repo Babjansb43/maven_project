@@ -24,7 +24,8 @@ pipeline {
             }
         }
         stage('Parallel stages') {
-            Parallel {
+            steps {
+             Parallel {
                 stage('Unit test') {
                     steps {
                         echo "Doing unit test"
@@ -40,6 +41,7 @@ pipeline {
                         echo "Doing security test"
                     }
                 }
+              }
             }
         }
         stage('Build') {
