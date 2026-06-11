@@ -25,17 +25,19 @@ pipeline {
         }
         stage('Parallel stages') {
             steps {
-                Parallel(
-                     a: {
-                       echo "Doing unit tests"
-                    },
-                     b: {
-                       echo "Doing static code analysis"
-                    },
-                    c: {
-                       echo "Doing security scan"
-                    }
-                )
+                script {
+                  Parallel(
+                       stage('Unit Test') {
+                         echo "Doing unit tests"
+                      },
+                       stage('Static code') {
+                         echo "Doing static code analysis"
+                      },
+                       stage('security') {
+                         echo "Doing security scan"
+                      }
+                    )
+                }
             }
         }
         stage('Build') {
