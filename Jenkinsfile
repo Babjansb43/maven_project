@@ -25,6 +25,7 @@ pipeline {
         }
         stage('Parallel stages') {
             steps {
+                script {
              Parallel {
                 stage('Unit test') {
                     steps {
@@ -42,6 +43,7 @@ pipeline {
                     }
                 }
               }
+            }
             }
         }
         stage('Build') {
