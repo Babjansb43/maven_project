@@ -27,6 +27,7 @@ pipeline {
             steps {
                 script {
                   Parallel(
+                    {
                        stage('Unit Test') {
                          echo "Doing unit tests"
                       },
@@ -36,6 +37,7 @@ pipeline {
                        stage('security') {
                          echo "Doing security scan"
                       }
+                    }
                     )
                 }
             }
