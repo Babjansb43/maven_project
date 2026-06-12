@@ -24,19 +24,23 @@ pipeline {
             }
         }
         stage('Parallel stages') {
-            steps {
-                Parallel {
+            parallel {
                 stage('Unit test') {
+                    steps {
                         echo "Doing unit test"
+                    }
                 }
                 stage('code analysis') {
+                    steps {
                         echo "Doing static code analysis"
                     }
+                }
                 stage('Security test') {
+                    steps {
                         echo "Doing security test"
                     }
                 }
-            }
+            }               
         }
         stage('Build') {
             steps {
